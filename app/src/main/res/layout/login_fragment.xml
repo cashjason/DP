@@ -30,10 +30,10 @@
         android:text="Login" />
 
     <Button
-        android:id="@+id/btSingUp"
+        android:id="@+id/btnCreateAccount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Sign Up" />
+        android:text="Create Account" />
 
     <TextView
         android:id="@+id/btnForgotPass"
