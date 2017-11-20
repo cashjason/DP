@@ -1,67 +1,87 @@
 package com.example.cashj.diamynperformance;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.os.PersistableBundle;
-import android.support.annotation.Nullable;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.EditText;
+import android.widget.Toast;
 
-public class LoginActivity extends AppCompatActivity {
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
-    Button login, createAccount;
-    TextView forgotPassword;
+/**
+ * Created by cashj on 11/20/2017.
+ */
 
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
+
+    private FirebaseAuth mAuth;
+    EditText email;
+    EditText password;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
 
-        login = findViewById(R.id.btnLogin);
-        createAccount = findViewById(R.id.btnCreateAccount);
-        forgotPassword = findViewById(R.id.btnForgotPass);
+        Button loginBtn = findViewById(R.id.btnLogin);
+        loginBtn.setOnClickListener(this);
 
-        // get the reference of Button's
+        Button create = findViewById(R.id.btnCreateAccount);
+        create.setOnClickListener(this);
 
-        // perform setOnClickListener event on First Button
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-        // load First Fragment
-                //Change intent to go to the nav activity
-            }
-        });
-        // perform setOnClickListener event on Second Button
-        createAccount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // load Second Fragment
-                loadFragment(new FirstFragment());
-            }
-        });
-        forgotPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // load forgot Password Fragment
-                loadFragment(new SecondFragment());
-            }        });
+        email = findViewById(R.id.textEmail);
+        password = findViewById(R.id.textPass);
+        mAuth = FirebaseAuth.getInstance();
     }
 
-    private void loadFragment(Fragment fragment) {
-        // create a FragmentManager
-        FragmentManager fm = getFragmentManager();
-        // create a FragmentTransaction to begin the transaction and replace the Fragment
-        FragmentTransaction fragmentTransaction = fm.beginTransaction();
-        // replace the FrameLayout with new Fragment
-        fragmentTransaction.replace(R.id.frameLayout, fragment);
-        fragmentTransaction.commit(); // save the changes
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            // User is signed in
+            Intent home = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(home);
+        } else {
+            // No user is signed in
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        String em = email.getText().toString();
+        String pass = password.getText().toString();
+        int i = v.getId();
+        if (i == R.id.btnLogin) {
+            try {
+                mAuth.signInWithEmailAndPassword(em, pass)
+                        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    Intent home = new Intent(getApplicationContext(), MainActivity.class);
+                                    startActivity(home);
+                                } else {
+                                    Toast.makeText(LoginActivity.this, "Invalid Login",
+                                            Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        });
+            }catch(Exception e){
+                Toast.makeText(LoginActivity.this, "Please enter your information",
+                        Toast.LENGTH_LONG).show();
+            }
+        }
+        if (i == R.id.btnCreateAccount){
+            Intent account = new Intent(getApplicationContext(), CreateAccountActivity.class);
+            startActivity(account);
+        }
     }
 }
