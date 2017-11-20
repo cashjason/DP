@@ -9,33 +9,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class ForgotPasswordFragment extends Fragment implements View.OnClickListener {
-    private static final String TAG = "Forgot Password Fragment";
+public class ForgotPasswordFragment extends android.app.Fragment implements View.OnClickListener {
 
 
-    @Nullable
+    View view;
+   //Button firstButton;
+
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.forgot_password_fragment, container, false);
-
-
-
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        view = inflater.inflate(R.layout.forgot_password_fragment, container, false);
+        //firstButton = view.findViewById(R.id.firstButton);
+        //firstButton.setOnClickListener(this);
         return view;
     }
 
     @Override
-    public void onClick(View v) {
-        int i = getView().getId();
-        if (i == R.id.btnLogin){
-            Intent intent = new Intent(getActivity(), HomeActivity.class);
-            startActivity(intent);
-            //navigate to home activity
-        }else if(i == R.id.btnCreateAccount){
-            ((MainActivity)getActivity()).setmViewPager(1);
-
-        }else if(i == R.id.btnForgotPass){
-            ((MainActivity)getActivity()).setmViewPager(2);
-        }
+    public void onClick(View view) {
+        Toast.makeText(getActivity(), "First Fragment Jason", Toast.LENGTH_LONG).show();
     }
 }

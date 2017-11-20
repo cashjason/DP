@@ -1,28 +1,24 @@
 package com.example.cashj.diamynperformance;
 
-import android.content.Intent;
+import android.app.Fragment;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
-public class CreateAccountFragment extends android.app.Fragment implements View.OnClickListener {
-
+public class FirstFragment extends Fragment implements View.OnClickListener {
 
     View view;
-    //Button firstButton;
+    Button firstButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.create_account_fragment, container, false);
-        //firstButton = view.findViewById(R.id.firstButton);
-        //firstButton.setOnClickListener(this);
+        view = inflater.inflate(R.layout.fragment_first, container, false);
+        firstButton = view.findViewById(R.id.firstButton);
+        firstButton.setOnClickListener(this);
         return view;
     }
 
