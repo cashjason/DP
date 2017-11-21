@@ -16,7 +16,6 @@
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">fill_parent</item>
         <item name="android:orientation">horizontal</item>
-        <item name="android:gravity">center_vertical</item>
     </style>
 
     <style name="ButtonStyleCustom" parent="@android:style/Widget.Button">
@@ -41,6 +40,17 @@
 
     <style name="TextViewButtonCustom" parent="@android:style/Widget.TextView">
         <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:layout_marginLeft">10dp</item>
+    </style>
+
+    <style name="SeekStyle" parent="@android:style/Widget.SeekBar">
+        <item name="android:background">@drawable/seek_back</item>
+        <item name="android:thumb">@drawable/thumbdraw</item>
+        <item name="android:progressDrawable">@drawable/progressdraw</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:layout_margin">10dp</item>
+
     </style>
 
 

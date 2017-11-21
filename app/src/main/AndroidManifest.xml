@@ -22,6 +22,9 @@
         <activity
             android:name=".CreateAccountActivity"
             android:theme="@style/AppTheme"></activity>
+        <activity
+            android:name=".DisplayEvaluations"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

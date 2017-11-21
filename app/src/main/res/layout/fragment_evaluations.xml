@@ -4,10 +4,55 @@
     android:layout_height="match_parent"
     tools:context="com.example.cashj.diamynperformance.EvaluationsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:background="@drawable/dugout"
+        style="@style/LinearLayoutOverlay"
+        android:orientation="vertical"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/textView23"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="Evaluations"
+            android:textColor="@color/colorAccent"
+            android:textAlignment="center"
+            android:textSize="30sp" />
+
+        <Button
+            android:id="@+id/bullpenEval"
+            style="@style/ButtonStyleCustom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Post Bullpen" />
+
+        <Button
+            android:id="@+id/postPreacticeEval"
+            style="@style/ButtonStyleCustom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Post Practice" />
+
+        <Button
+            android:id="@+id/postGameEval"
+            style="@style/ButtonStyleCustom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Post Game" />
+
+        <Button
+            android:id="@+id/postGameEvalPitcher"
+            style="@style/ButtonStyleCustom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Post Game" />
+    </LinearLayout>
 
 </FrameLayout>

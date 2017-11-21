@@ -35,8 +35,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="EMAIL:"
-                android:textColor="@color/colorAccent"
-                android:layout_marginLeft="10dp"/>
+                style="@style/TextViewButtonCustom"/>
 
             <EditText
                 android:id="@+id/textEmail"
@@ -51,8 +50,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="PASSWORD:"
-                android:textColor="@color/colorAccent"
-                android:layout_marginLeft="10dp"/>
+                style="@style/TextViewButtonCustom"/>
             cash
             <EditText
                 android:id="@+id/textPass"
