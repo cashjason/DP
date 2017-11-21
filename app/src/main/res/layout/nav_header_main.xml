@@ -51,11 +51,12 @@
                 android:paddingTop="@dimen/nav_header_vertical_spacing"
                 android:text="Player info"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="@dimen/nav_header_vertical_spacing"
-                android:text="Player number"
+                android:text="Player num"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
             <TextView
                 android:layout_width="match_parent"

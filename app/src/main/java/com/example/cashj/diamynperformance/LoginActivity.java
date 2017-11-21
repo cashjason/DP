@@ -7,34 +7,31 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-/**
- * Created by cashj on 11/20/2017.
- */
-
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 
     private FirebaseAuth mAuth;
-    EditText email;
-    EditText password;
+    EditText email, password;
+    Button login, create;
+    TextView forgotPassword;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        Button loginBtn = findViewById(R.id.btnLogin);
-        loginBtn.setOnClickListener(this);
-
-        Button create = findViewById(R.id.btnCreateAccount);
+        login = findViewById(R.id.btnLogin);
+        login.setOnClickListener(this);
+        create = findViewById(R.id.btnCreateAccount);
         create.setOnClickListener(this);
-
+        forgotPassword = findViewById(R.id.btnForgotPass);
+        forgotPassword.setOnClickListener(this);
         email = findViewById(R.id.textEmail);
         password = findViewById(R.id.textPass);
         mAuth = FirebaseAuth.getInstance();
@@ -43,7 +40,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onStart() {
         super.onStart();
-
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             // User is signed in
@@ -82,6 +78,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (i == R.id.btnCreateAccount){
             Intent account = new Intent(getApplicationContext(), CreateAccountActivity.class);
             startActivity(account);
+        }
+        if (i == R.id.btnForgotPass){
+            mAuth = FirebaseAuth.getInstance();
+            mAuth.sendPasswordResetEmail(email.getText().toString())
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(LoginActivity.this, "Email Sent!", Toast.LENGTH_SHORT).show();
+                            }else{
+                                Toast.makeText(LoginActivity.this, "No account with the email address entered!", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
         }
     }
 }

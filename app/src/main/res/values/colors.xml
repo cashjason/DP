@@ -5,4 +5,5 @@
     <color name="colorAccent">#af8446</color>
     <color name="darkGrey">#202020</color>
     <color name="background_material_light">#c3c3c3</color>
+    <color name="background_overlay">#E4010101</color>
 </resources>
