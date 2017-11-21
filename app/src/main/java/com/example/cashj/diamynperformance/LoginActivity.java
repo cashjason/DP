@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -21,11 +22,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     EditText email, password;
     Button login, create;
     TextView forgotPassword;
+    ProgressBar progress;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        mAuth = FirebaseAuth.getInstance();
         login = findViewById(R.id.btnLogin);
         login.setOnClickListener(this);
         create = findViewById(R.id.btnCreateAccount);
@@ -34,7 +36,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         forgotPassword.setOnClickListener(this);
         email = findViewById(R.id.textEmail);
         password = findViewById(R.id.textPass);
-        mAuth = FirebaseAuth.getInstance();
+        progress = (ProgressBar) findViewById(R.id.progress);
+        progress.setVisibility(View.GONE);
+
+
     }
 
     @Override
@@ -54,6 +59,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         String em = email.getText().toString();
         String pass = password.getText().toString();
+        progress.setVisibility(View.VISIBLE);
         int i = v.getId();
         if (i == R.id.btnLogin) {
             try {
@@ -64,15 +70,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 if (task.isSuccessful()) {
                                     Intent home = new Intent(getApplicationContext(), MainActivity.class);
                                     startActivity(home);
+                                    progress.setVisibility(View.GONE);
                                 } else {
                                     Toast.makeText(LoginActivity.this, "Invalid Login",
                                             Toast.LENGTH_LONG).show();
+                                    progress.setVisibility(View.GONE);
                                 }
                             }
                         });
             }catch(Exception e){
                 Toast.makeText(LoginActivity.this, "Please enter your information",
                         Toast.LENGTH_LONG).show();
+                progress.setVisibility(View.GONE);
             }
         }
         if (i == R.id.btnCreateAccount){
@@ -80,6 +89,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             startActivity(account);
         }
         if (i == R.id.btnForgotPass){
+            progress.setVisibility(View.VISIBLE);
             mAuth = FirebaseAuth.getInstance();
             mAuth.sendPasswordResetEmail(email.getText().toString())
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
