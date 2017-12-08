@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
@@ -18,7 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 
-public class DisplayEvaluations extends AppCompatActivity{
+public class DisplayEvaluations extends AppCompatActivity implements View.OnClickListener {
     String ID;
     TextView title, q1, q2, q3, q4, q5,q6, bq1, bull1, bull2, bull3, bull4, abr1, abr2,
             pitch1Q, pitch2Q, pitch3Q, pitch4Q, pitch5Q, pitch6Q;
@@ -26,11 +27,10 @@ public class DisplayEvaluations extends AppCompatActivity{
     EditText notes, bull1Notes, bull2Notes, bull3Notes, bull4Notes, ab1Notes, ab2Notes, ab3Notes,
             ab4Notes, ab5Notes, ab6Notes, ab7Notes, pgn1, pgn2, pgn3, pgn4, aNotes;
     LinearLayout general, postGamePitcher, postGame, postBullpen;
-    SimpleDateFormat simpleDateFormat;
-    FirebaseDatabase database;
-    String eval;
+    SimpleDateFormat simpledateFormat;
+    String eval, date;
     DatabaseReference mDatabase;
-
+    Button submit;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,13 +38,13 @@ public class DisplayEvaluations extends AppCompatActivity{
         setContentView(R.layout.display_evaluations);
         Bundle extras = getIntent().getExtras();
         if(extras !=null) {
-            eval = extras.getString("EVAL");
+            eval = extras.getString("eval");
         }
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         ID = user.getUid();
-        simpleDateFormat = new SimpleDateFormat("MM-dd-yyyy");
+        simpledateFormat = new SimpleDateFormat("MM-dd-yyyy");
         mDatabase = FirebaseDatabase.getInstance().getReference();
-
+        date = simpledateFormat.format(System.currentTimeMillis());
         title = (TextView) findViewById(R.id.evalTitle);
         title.setText(eval);
         q1 = (TextView) findViewById(R.id.q1);
@@ -94,7 +94,8 @@ public class DisplayEvaluations extends AppCompatActivity{
         pgn3 = (EditText) findViewById(R.id.pitch3A);
         pgn4 = (EditText) findViewById(R.id.pitch4A);
         aNotes = (EditText) findViewById(R.id.aNotes);
-
+        submit = (Button) findViewById(R.id.submitBtn);
+        submit.setOnClickListener(this);
         general = (LinearLayout) findViewById(R.id.general);
         postGame = (LinearLayout) findViewById(R.id.postGameHitter);
         postGamePitcher = (LinearLayout) findViewById(R.id.postGamePitcher);
@@ -107,9 +108,6 @@ public class DisplayEvaluations extends AppCompatActivity{
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getValue().toString().equals("Hitter")){
                     if (eval.equals("PostGameEval")){
-                        postGame.setVisibility(View.VISIBLE);
-                    }
-                    else if (eval.equals("PostGameEval")){
                         postGame.setVisibility(View.VISIBLE);
                     }
                 }else if (dataSnapshot.getValue().toString().equals("Pitcher")){
@@ -126,5 +124,183 @@ public class DisplayEvaluations extends AppCompatActivity{
             }
         });
 
+        mDatabase.child("Questions/General").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snap : dataSnapshot.getChildren()) {
+                    if (snap.getKey().equals("question1")){
+                        q1.setText(snap.getValue().toString());
+                    }else if (snap.getKey().equals("question2")){
+                        q2.setText(snap.getValue().toString());
+                    }else if (snap.getKey().equals("question3")){
+                        q3.setText(snap.getValue().toString());
+                    }else if (snap.getKey().equals("question4")){
+                        q4.setText(snap.getValue().toString());
+                    }else if (snap.getKey().equals("question5")){
+                        q5.setText(snap.getValue().toString());
+                    }else if (snap.getKey().equals("question6")){
+                        q6.setText(snap.getValue().toString());
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+        mDatabase.child("Questions/Batter").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snap : dataSnapshot.getChildren()) {
+                    if (snap.getKey().equals("atBat1")){
+                        abr1.setText(snap.getValue().toString());
+                    }else if (snap.getKey().equals("atBat2")){
+                        abr2.setText(snap.getValue().toString());
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+        mDatabase.child("Questions/Pitcher").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snap : dataSnapshot.getChildren()) {
+                    if (snap.getKey().equals("bullpen")){
+                        bull1.setText(snap.getValue().toString());
+                    }else if (snap.getKey().equals("bullpen1")){
+                        bull2.setText(snap.getValue().toString());
+                    }else if (snap.getKey().equals("bullpen2")){
+                        bull3.setText(snap.getValue().toString());
+                    }else if (snap.getKey().equals("bullpen3")){
+                        bull4.setText(snap.getValue().toString());
+                    }else if (snap.getKey().equals("game1")){
+                        pitch1Q.setText(snap.getValue().toString());
+                    }else if (snap.getKey().equals("game2")){
+                        pitch2Q.setText(snap.getValue().toString());
+                    }else if (snap.getKey().equals("game3")){
+                        pitch3Q.setText(snap.getValue().toString());
+                    }else if (snap.getKey().equals("game4")){
+                        pitch4Q.setText(snap.getValue().toString());
+                    }else if (snap.getKey().equals("game5")){
+                        pitch5Q.setText(snap.getValue().toString());
+                    }else if (snap.getKey().equals("game6")){
+                        pitch6Q.setText(snap.getValue().toString());
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+    }
+
+    @Override
+    public void onClick(View v) {
+        
+        //Add all of the post Practice stuff here
+        mDatabase.child("users").child(ID).child(eval)
+                .child(date).child("question1Answer").setValue(rSeek.getProgress()+1);
+
+        mDatabase.child("users").child(ID).child(eval)
+                .child(date).child("question2Answer").setValue(aSeek.getProgress()+1);
+
+        mDatabase.child("users").child(ID).child(eval)
+                .child(date).child("question3Answer").setValue(iSeek.getProgress()+1);
+
+        mDatabase.child("users").child(ID).child(eval)
+                .child(date).child("question4Answer").setValue(dSeek.getProgress()+1);
+
+        mDatabase.child("users").child(ID).child(eval)
+                .child(date).child("question5Answer").setValue(eSeek.getProgress()+1);
+
+        mDatabase.child("users").child(ID).child(eval)
+                .child(date).child("question6Answer").setValue(r2Seek.getProgress()+1);
+
+        mDatabase.child("users").child(ID).child(eval)
+                .child(date).child("notes").setValue(notes.getText().toString());
+
+        mDatabase.child("users/"+ID+"/PlayerInformation/Position").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue().toString().equals("Hitter")){
+                    if (eval.equals("PostGameEval")){
+                        //Add hitter post game eval section to database
+                        mDatabase.child("users").child(ID).child(eval)
+                                .child(date).child("atBat1Answer").setValue(ab1Seek.getProgress()+1);
+
+                        mDatabase.child("users").child(ID).child(eval)
+                                .child(date).child("atBat2Answer").setValue(ab2Seek.getProgress()+1);
+
+                        mDatabase.child("users").child(ID).child(eval)
+                                .child(date).child("atBat1Notes").setValue(ab1Notes.getText().toString());
+
+                        mDatabase.child("users").child(ID).child(eval)
+                                .child(date).child("atBat2Notes").setValue(ab2Notes.getText().toString());
+
+                        mDatabase.child("users").child(ID).child(eval)
+                                .child(date).child("atBat3Notes").setValue(ab3Notes.getText().toString());
+
+                        mDatabase.child("users").child(ID).child(eval)
+                                .child(date).child("atBat4Notes").setValue(ab4Notes.getText().toString());
+
+                        mDatabase.child("users").child(ID).child(eval)
+                                .child(date).child("atBat5Notes").setValue(ab5Notes.getText().toString());
+
+                        mDatabase.child("users").child(ID).child(eval)
+                                .child(date).child("atBat6Notes").setValue(ab6Notes.getText().toString());
+
+                        mDatabase.child("users").child(ID).child(eval)
+                                .child(date).child("atBat7Notes").setValue(ab7Notes.getText().toString());
+                    }
+                }else if (dataSnapshot.getValue().toString().equals("Pitcher")){
+                    if (eval.equals("PostGameEval")){
+                        //Add pitcher post game eval section to database
+                        mDatabase.child("users").child(ID).child(eval)
+                                .child(date).child("pitchQuestion1Answer").setValue(pitch1Seek.getProgress()+1);
+
+                        mDatabase.child("users").child(ID).child(eval)
+                                .child(date).child("pitchQuestion2Answer").setValue(pitch2Seek.getProgress()+1);
+
+                        mDatabase.child("users").child(ID).child(eval)
+                                .child(date).child("pitchQuestion3NotesAnswer").setValue(pgn1.getText().toString());
+
+                        mDatabase.child("users").child(ID).child(eval)
+                                .child(date).child("pitchQuestion4NotesAnswer").setValue(pgn2.getText().toString());
+
+                        mDatabase.child("users").child(ID).child(eval)
+                                .child(date).child("pitchQuestion5NotesAnswer").setValue(pgn3.getText().toString());
+
+                        mDatabase.child("users").child(ID).child(eval)
+                                .child(date).child("pitchQuestion6NotesAnswer").setValue(pgn4.getText().toString());
+
+                        mDatabase.child("users").child(ID).child(eval)
+                                .child(date).child("additionalNotes").setValue(aNotes.getText().toString());
+                    }
+                    else if (eval.equals("PostBullpenEval")){
+                        //Add pitcher post bullpen eval section to database
+                        mDatabase.child("users").child(ID).child(eval)
+                                .child(date).child("bullpenQuestion1Answer").setValue(bSeek.getProgress()+1);
+
+                        mDatabase.child("users").child(ID).child(eval)
+                                .child(date).child("bullpenQuestion1Notes").setValue(bull1Notes.getText().toString());
+
+                        mDatabase.child("users").child(ID).child(eval)
+                                .child(date).child("bullpenQuestion2Notes").setValue(bull2Notes.getText().toString());
+
+                        mDatabase.child("users").child(ID).child(eval)
+                                .child(date).child("bullpenQuestion3Notes").setValue(bull3Notes.getText().toString());
+
+                        mDatabase.child("users").child(ID).child(eval)
+                                .child(date).child("bullpenQuestion4Notes").setValue(bull4Notes.getText().toString());
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
     }
 }

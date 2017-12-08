@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity
         getSupportActionBar().setTitle("");
         Fragment fragment = null;
         Class fragmentClass = null;
-        fragmentClass = EvaluationsFragment.class;
+        fragmentClass = FeedFragment.class;
         try {
             fragment = (Fragment) fragmentClass.newInstance();
         } catch (Exception e) {
@@ -117,12 +117,14 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
         Fragment fragment = null;
         Class fragmentClass = null;
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_feed) {
+            fragmentClass = FeedFragment.class;
+        } else if (id == R.id.nav_camera) {
             fragmentClass = EvaluationsFragment.class;
         } else if (id == R.id.nav_gallery) {
-            fragmentClass = EvaluationsFragment.class;
+            fragmentClass = HistoryFragment.class;
         } else if (id == R.id.nav_slideshow) {
-            fragmentClass = EvaluationsFragment.class;
+            fragmentClass = ProgressFragment.class;
         } else if (id == R.id.nav_manage) {
             fragmentClass = EvaluationsFragment.class;
         }else if (id == R.id.nav_tools) {

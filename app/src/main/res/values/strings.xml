@@ -10,4 +10,23 @@
 
     <string name="action_settings">Settings</string>
     <string name="action_signOut">Sign Out</string>
+
+    <string name="player_error">Error initializing YouTube player: %s</string>
+    <string name="seek_to">Jump To</string>
+    <string name="seek_to_hint">Seconds</string>
+
+    <string-array name="team_arrays">
+        <item>WSU</item>
+    </string-array>
+    <string-array name="year_arrays">
+        <item>Freshman</item>
+        <item>Sophomore</item>
+        <item>Junior</item>
+        <item>Senior</item>
+    </string-array>
+    <string-array name="position_arrays">
+        <item>Pitcher</item>
+        <item>Hitter</item>
+    </string-array>
 </resources>
+

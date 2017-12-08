@@ -45,6 +45,9 @@ public class EvaluationsFragment extends Fragment implements View.OnClickListene
         bullpenEval.setOnClickListener(this);
         pitcherGameEval = (Button) view.findViewById(R.id.postGameEvalPitcher);
         pitcherGameEval.setOnClickListener(this);
+        bullpenEval.setVisibility(View.GONE);
+        pitcherGameEval.setVisibility(View.GONE);
+        gameEval.setVisibility(View.GONE);
         user = FirebaseAuth.getInstance().getCurrentUser();
         ID =  user.getUid();
         database = FirebaseDatabase.getInstance();
@@ -53,10 +56,10 @@ public class EvaluationsFragment extends Fragment implements View.OnClickListene
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String value = dataSnapshot.getValue(String.class);
                 if (value.equals("Hitter")){
-                    bullpenEval.setVisibility(View.GONE);
-                    pitcherGameEval.setVisibility(View.GONE);
+                    gameEval.setVisibility(View.VISIBLE);
                 }else{
-                    gameEval.setVisibility(View.GONE);
+                    bullpenEval.setVisibility(View.VISIBLE);
+                    pitcherGameEval.setVisibility(View.VISIBLE);
                 }
             }
             @Override
@@ -90,6 +93,5 @@ public class EvaluationsFragment extends Fragment implements View.OnClickListene
             act.putExtra("EVAL", "PostGameEval");
             startActivity(act);
         }
-
     }
 }
