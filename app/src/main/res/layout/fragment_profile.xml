@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    style="@style/LinearLayoutOverlay"
+    android:background="@drawable/dugout"
     tools:context="com.example.cashj.diamynperformance.FeedFragment">
 
     <ScrollView
@@ -21,6 +24,8 @@
                 android:id="@+id/textView17"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/colorPrimary"
                 android:text="Name:" />
 
             <EditText
@@ -36,6 +41,8 @@
                 android:id="@+id/textView16"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/colorPrimary"
                 android:text="Number:" />
 
             <EditText
@@ -51,6 +58,8 @@
                 android:id="@+id/textView13"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/colorPrimary"
                 android:text="Phone:" />
 
             <EditText
@@ -66,6 +75,8 @@
                 android:id="@+id/textView11"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/colorPrimary"
                 android:text="Team:" />
 
             <Spinner
@@ -73,12 +84,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAlignment="textEnd"
+                style="@style/EditTextStyle"
                 android:entries="@array/team_arrays"/>
 
             <TextView
                 android:id="@+id/textView8"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/colorPrimary"
                 android:text="Year:"/>
 
             <Spinner
@@ -86,12 +100,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAlignment="textEnd"
+                style="@style/EditTextStyle"
                 android:entries="@array/year_arrays"/>
 
             <TextView
                 android:id="@+id/textView5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/colorPrimary"
                 android:text="Position" />
 
             <Spinner
@@ -99,12 +116,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAlignment="textEnd"
+                style="@style/EditTextStyle"
                 android:entries="@array/position_arrays"/>
 
             <TextView
                 android:id="@+id/textView4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/colorPrimary"
                 android:text="Height" />
 
             <EditText
@@ -120,6 +140,8 @@
                 android:id="@+id/textView18"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/colorPrimary"
                 android:text="Weight:" />
 
             <EditText
@@ -147,5 +169,4 @@
                 android:text="Done" />
         </LinearLayout>
     </ScrollView>
-
-</FrameLayout>
+</LinearLayout>

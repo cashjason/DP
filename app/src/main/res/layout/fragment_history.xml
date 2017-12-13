@@ -4,14 +4,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/flags"
-    style="@style/LinearLayoutOverlay"
-    >
-
-
-
+    style="@style/LinearLayoutOverlay">
 
     <TextView
         android:id="@+id/monthTitle"
+        android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Month"
@@ -21,22 +18,21 @@
         android:layout_gravity="center"/>
 
 
-
-    <com.github.sundeepk.compactcalendarview.CompactCalendarView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <com.github.sundeepk.compactcalendarview.CompactCalendarView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/compactcalendar_view"
         android:layout_width="fill_parent"
-        android:paddingRight="10dp"
-        android:paddingLeft="10dp"
         android:layout_height="250dp"
-        app:compactCalendarTargetHeight="250dp"
-        app:compactCalendarTextSize="12sp"
+        android:layout_margin="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="30dp"
         app:compactCalendarBackgroundColor="#00ffffff"
-        app:compactCalendarTextColor="#fff"
-        app:compactCalendarCurrentSelectedDayBackgroundColor="#66AF8446"
-        app:compactCalendarCurrentDayBackgroundColor="#DDAF8446"
+        app:compactCalendarCurrentDayBackgroundColor="#66AF8446"
+        app:compactCalendarCurrentSelectedDayBackgroundColor="#DDAF8446"
         app:compactCalendarMultiEventIndicatorColor="#fff"
-        />
+        app:compactCalendarTargetHeight="250dp"
+        app:compactCalendarTextColor="#fff"
+        app:compactCalendarTextSize="12sp" />
 
     <ScrollView
         android:layout_width="match_parent"

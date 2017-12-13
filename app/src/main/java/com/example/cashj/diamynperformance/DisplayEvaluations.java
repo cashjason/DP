@@ -45,78 +45,81 @@ public class DisplayEvaluations extends AppCompatActivity implements View.OnClic
         simpledateFormat = new SimpleDateFormat("MM-dd-yyyy");
         mDatabase = FirebaseDatabase.getInstance().getReference();
         date = simpledateFormat.format(System.currentTimeMillis());
-        title = (TextView) findViewById(R.id.evalTitle);
+        title = findViewById(R.id.evalTitle);
         title.setText(eval);
-        q1 = (TextView) findViewById(R.id.q1);
-        q2 = (TextView) findViewById(R.id.q2);
-        q3 = (TextView) findViewById(R.id.q3);
-        q4 = (TextView) findViewById(R.id.q4);
-        q5 = (TextView) findViewById(R.id.q5);
-        q6 = (TextView) findViewById(R.id.q6);
-        bq1 = (TextView) findViewById(R.id.bq1);
-        bull1 = (TextView) findViewById(R.id.bull1);
-        bull2 = (TextView) findViewById(R.id.bull2);
-        bull3 = (TextView) findViewById(R.id.bull3);
-        bull4 = (TextView) findViewById(R.id.bull4);
-        abr1 = (TextView) findViewById(R.id.abd1);
-        abr2 = (TextView) findViewById(R.id.abd2);
-        pitch1Q = (TextView) findViewById(R.id.pq1);
-        pitch2Q = (TextView) findViewById(R.id.pq2);
-        pitch3Q = (TextView) findViewById(R.id.pitch1Q);
-        pitch4Q = (TextView) findViewById(R.id.pitch2Q);
-        pitch5Q = (TextView) findViewById(R.id.pitch3Q);
-        pitch6Q = (TextView) findViewById(R.id.pitch4Q);
-        rSeek = (SeekBar) findViewById(R.id.Rseek);
-        aSeek = (SeekBar) findViewById(R.id.Aseek);
-        iSeek = (SeekBar) findViewById(R.id.Iseek);
-        dSeek = (SeekBar) findViewById(R.id.Dseek);
-        eSeek = (SeekBar) findViewById(R.id.Eseek);
-        r2Seek = (SeekBar) findViewById(R.id.R2seek);
-        bSeek = (SeekBar) findViewById(R.id.bpSeek);
-        ab1Seek = (SeekBar) findViewById(R.id.abSeek);
-        ab2Seek = (SeekBar) findViewById(R.id.ab2Seek);
-        pitch1Seek = (SeekBar) findViewById(R.id.pitch1Seek);
-        pitch2Seek = (SeekBar) findViewById(R.id.pitch2Seek);
-        notes = (EditText) findViewById(R.id.notesText);
-        bull1Notes = (EditText) findViewById(R.id.b1Notes);
-        bull2Notes = (EditText) findViewById(R.id.b2Notes);
-        bull3Notes = (EditText) findViewById(R.id.b3Notes);
-        bull4Notes = (EditText) findViewById(R.id.b4Notes);
-        ab1Notes = (EditText) findViewById(R.id.ab1Notes);
-        ab2Notes = (EditText) findViewById(R.id.ab2Notes);
-        ab3Notes = (EditText) findViewById(R.id.ab3Notes);
-        ab4Notes = (EditText) findViewById(R.id.ab4Notes);
-        ab5Notes = (EditText) findViewById(R.id.ab5Notes);
-        ab6Notes = (EditText) findViewById(R.id.ab6Notes);
-        ab7Notes = (EditText) findViewById(R.id.ab7Notes);
-        pgn1 = (EditText) findViewById(R.id.pitch1A);
-        pgn2 = (EditText) findViewById(R.id.pitch2A);
-        pgn3 = (EditText) findViewById(R.id.pitch3A);
-        pgn4 = (EditText) findViewById(R.id.pitch4A);
-        aNotes = (EditText) findViewById(R.id.aNotes);
-        submit = (Button) findViewById(R.id.submitBtn);
+        q1 = findViewById(R.id.q1);
+        q2 = findViewById(R.id.q2);
+        q3 = findViewById(R.id.q3);
+        q4 = findViewById(R.id.q4);
+        q5 = findViewById(R.id.q5);
+        q6 = findViewById(R.id.q6);
+        bq1 = findViewById(R.id.bq1);
+        bull1 = findViewById(R.id.bull1);
+        bull2 = findViewById(R.id.bull2);
+        bull3 = findViewById(R.id.bull3);
+        bull4 = findViewById(R.id.bull4);
+        abr1 = findViewById(R.id.abd1);
+        abr2 = findViewById(R.id.abd2);
+        pitch1Q = findViewById(R.id.pq1);
+        pitch2Q = findViewById(R.id.pq2);
+        pitch3Q = findViewById(R.id.pitch1Q);
+        pitch4Q = findViewById(R.id.pitch2Q);
+        pitch5Q = findViewById(R.id.pitch3Q);
+        pitch6Q = findViewById(R.id.pitch4Q);
+        rSeek = findViewById(R.id.Rseek);
+        aSeek = findViewById(R.id.Aseek);
+        iSeek = findViewById(R.id.Iseek);
+        dSeek = findViewById(R.id.Dseek);
+        eSeek = findViewById(R.id.Eseek);
+        r2Seek = findViewById(R.id.R2seek);
+        bSeek = findViewById(R.id.bpSeek);
+        ab1Seek = findViewById(R.id.abSeek);
+        ab2Seek = findViewById(R.id.ab2Seek);
+        pitch1Seek = findViewById(R.id.pitch1Seek);
+        pitch2Seek = findViewById(R.id.pitch2Seek);
+        notes = findViewById(R.id.notesText);
+        bull1Notes = findViewById(R.id.b1Notes);
+        bull2Notes = findViewById(R.id.b2Notes);
+        bull3Notes = findViewById(R.id.b3Notes);
+        bull4Notes = findViewById(R.id.b4Notes);
+        ab1Notes = findViewById(R.id.ab1Notes);
+        ab2Notes = findViewById(R.id.ab2Notes);
+        ab3Notes = findViewById(R.id.ab3Notes);
+        ab4Notes = findViewById(R.id.ab4Notes);
+        ab5Notes = findViewById(R.id.ab5Notes);
+        ab6Notes = findViewById(R.id.ab6Notes);
+        ab7Notes = findViewById(R.id.ab7Notes);
+        pgn1 = findViewById(R.id.pitch1A);
+        pgn2 = findViewById(R.id.pitch2A);
+        pgn3 = findViewById(R.id.pitch3A);
+        pgn4 = findViewById(R.id.pitch4A);
+        aNotes = findViewById(R.id.aNotes);
+        submit = findViewById(R.id.submitBtn);
         submit.setOnClickListener(this);
-        general = (LinearLayout) findViewById(R.id.general);
-        postGame = (LinearLayout) findViewById(R.id.postGameHitter);
-        postGamePitcher = (LinearLayout) findViewById(R.id.postGamePitcher);
-        postBullpen = (LinearLayout) findViewById(R.id.postBullpen);
+        general = findViewById(R.id.general);
+        postGame = findViewById(R.id.postGameHitter);
+        postGamePitcher = findViewById(R.id.postGamePitcher);
+        postBullpen = findViewById(R.id.postBullpen);
         postGame.setVisibility(View.GONE);
         postGamePitcher.setVisibility(View.GONE);
         postBullpen.setVisibility(View.GONE);
         mDatabase.child("users/"+ID+"/PlayerInformation/Position").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.getValue().toString().equals("Hitter")){
-                    if (eval.equals("PostGameEval")){
-                        postGame.setVisibility(View.VISIBLE);
+                try {
+                    if (dataSnapshot.getValue().toString().equals("Hitter")) {
+                        if (eval.equals("PostGameEval")) {
+                            postGame.setVisibility(View.VISIBLE);
+                        }
+                    } else if (dataSnapshot.getValue().toString().equals("Pitcher")) {
+                        if (eval.equals("PostGameEval")) {
+                            postGamePitcher.setVisibility(View.VISIBLE);
+                        } else if (eval.equals("PostBullpenEval")) {
+                            postBullpen.setVisibility(View.VISIBLE);
+                        }
                     }
-                }else if (dataSnapshot.getValue().toString().equals("Pitcher")){
-                    if (eval.equals("PostGameEval")){
-                        postGamePitcher.setVisibility(View.VISIBLE);
-                    }
-                    else if (eval.equals("PostBullpenEval")){
-                        postBullpen.setVisibility(View.VISIBLE);
-                    }
+                }catch(NullPointerException e){
+                    System.out.println("error");
                 }
             }
             @Override

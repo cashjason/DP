@@ -8,19 +8,28 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.listener.ChartTouchListener;
+import com.github.mikephil.charting.listener.OnChartGestureListener;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -37,7 +46,7 @@ import java.util.Date;
 import java.util.List;
 
 @RequiresApi(api = Build.VERSION_CODES.N)
-public class ProgressFragment extends Fragment implements View.OnClickListener, ValueEventListener {
+public class ProgressFragment extends Fragment implements View.OnClickListener, ValueEventListener, OnChartValueSelectedListener {
 
     String ID;
     FirebaseUser user;
@@ -47,6 +56,7 @@ public class ProgressFragment extends Fragment implements View.OnClickListener, 
     ArrayList<Long> dates, datesSorted;
     SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
     BarChart chart;
+    LineChart chart2;
 
 
     @Nullable
@@ -75,7 +85,8 @@ public class ProgressFragment extends Fragment implements View.OnClickListener, 
         mDatabase.child("users/"+ID+"/PostGameEval").addValueEventListener(this);
         mDatabase.child("users/"+ID+"/PostPracticeEval").addValueEventListener(this);
         mDatabase.child("users/"+ID+"/PostBullpenEval").addValueEventListener(this);
-        chart = (BarChart) view.findViewById(R.id.chart);
+        chart = view.findViewById(R.id.chart);
+        chart2 = view.findViewById(R.id.chart2);
         //chart1 = (BarChart) view.findViewById(R.id.bchart);
         //YourData[] dataObjects = ...;
 //
@@ -146,18 +157,25 @@ public class ProgressFragment extends Fragment implements View.OnClickListener, 
         return val;
     }
 
+    ArrayList<Integer> newR1 = new ArrayList<>();
+    ArrayList<Integer> newA = new ArrayList<>();
+    ArrayList<Integer> newI = new ArrayList<>();
+    ArrayList<Integer> newD = new ArrayList<>();
+    ArrayList<Integer> newE = new ArrayList<>();
+    ArrayList<Integer> newR2 = new ArrayList<>();
+
     public void updateGraph(){
         //System.out.println("Stuff  = " + dates.size() + datesSorted.size());
         datesSorted.clear();
         for (int i = 0; i < dates.size(); i++){
             datesSorted.add(dates.get(i));
         }
-        ArrayList<Integer> newR1 = new ArrayList<>();
-        ArrayList<Integer> newA = new ArrayList<>();
-        ArrayList<Integer> newI = new ArrayList<>();
-        ArrayList<Integer> newD = new ArrayList<>();
-        ArrayList<Integer> newE = new ArrayList<>();
-        ArrayList<Integer> newR2 = new ArrayList<>();
+//        ArrayList<Integer> newR1 = new ArrayList<>();
+//        ArrayList<Integer> newA = new ArrayList<>();
+//        ArrayList<Integer> newI = new ArrayList<>();
+//        ArrayList<Integer> newD = new ArrayList<>();
+//        ArrayList<Integer> newE = new ArrayList<>();
+//        ArrayList<Integer> newR2 = new ArrayList<>();
         newR1.clear();
         newA.clear();
         newI.clear();
@@ -196,14 +214,125 @@ public class ProgressFragment extends Fragment implements View.OnClickListener, 
         entries.add(new BarEntry(4, (float) (0 + getAve(newE))));
         entries.add(new BarEntry(5, (float) (0 + getAve(newR2))));
 
-        BarDataSet dataSet = new BarDataSet(entries, "Average subscores"); // add entries to dataset
+        BarDataSet dataSet = new BarDataSet(entries, "RAIDER Subscores"); // add entries to dataset
+        dataSet.setBarBorderColor(4);
         //dataSet.setColors(new int[] {Color.RED, Color.GREEN, Color.BLUE, Color.YELLOW });
         dataSet.setColors(Color.parseColor("#AF8446"));
         // this is the color i want #Af8446
         BarData barData = new BarData(dataSet);
 
+        Legend legend = chart.getLegend();
+        legend.setTextColor(Color.WHITE);
+
+        XAxis xAxis = chart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setDrawAxisLine(false);
+        xAxis.setDrawGridLines(false);
+        xAxis.setTextColor(Color.WHITE);
+
+
+
+        YAxis leftAxis = chart.getAxisLeft();
+        YAxis rightAxis = chart.getAxisRight();
+
+        rightAxis.removeAllLimitLines();
+        rightAxis.setDrawLabels(false);
+        rightAxis.setDrawZeroLine(false);
+        rightAxis.setDrawAxisLine(false);
+        rightAxis.setDrawGridLines(false);
+
+        leftAxis.setTextColor(Color.WHITE);
+        leftAxis.setDrawAxisLine(false);
+        leftAxis.setDrawGridLines(false);
+        leftAxis.setDrawZeroLine(false);
+        leftAxis.setMinWidth(0);
+        leftAxis.setAxisMinimum(0);
+        leftAxis.setAxisMaximum(10);
+        leftAxis.setMaxWidth(10);
+
         chart.setData(barData);
+        chart.setNoDataTextColor(Color.GRAY);
+        chart.setScaleEnabled(false);
+        chart.getDescription().setEnabled(false);
+        chart.animateY(300);
+        chart.setOnChartValueSelectedListener(this);
         chart.invalidate(); // refresh
 
+    }
+
+    @Override
+    public void onValueSelected(Entry e, Highlight h) {
+        int value = (int) e.getX();
+        if (value == 0){
+            showQuestionGraph(newR1, "R = Relaxation Level");
+        }else if(value == 1){
+            showQuestionGraph(newA, "A = Amp Level");
+        }
+        else if(value == 2){
+            showQuestionGraph(newI, "I = Imagine Before Action");
+        }
+        else if(value == 3){
+            showQuestionGraph(newD, "D = Dominate THIS Moment");
+        }
+        else if(value == 4){
+            showQuestionGraph(newE, "E = Embrace Advirsity");
+        }
+        else if(value == 5){
+            showQuestionGraph(newR2, "R = Routines");
+        }
+    }
+
+    @Override
+    public void onNothingSelected() {
+    }
+
+    public void showQuestionGraph(ArrayList<Integer> question, String title){
+
+        List<Entry> entries = new ArrayList<>();
+
+        //add entries to the list
+        for(int i = 0; i < question.size(); i ++){
+            entries.add(new BarEntry(0 + i, 0 + question.get(i)));
+        }
+        //entries.add(new BarEntry(0, (float) (0 + getAve(newR1))));
+
+        Legend legend = chart2.getLegend();
+        legend.setTextColor(Color.WHITE);
+
+        XAxis xAxis = chart2.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setDrawAxisLine(false);
+        xAxis.setTextColor(Color.WHITE);
+
+        //xAxis.setDrawGridLines(false);
+
+        YAxis leftAxis = chart2.getAxisLeft();
+        YAxis rightAxis = chart2.getAxisRight();
+
+        rightAxis.removeAllLimitLines();
+        rightAxis.setDrawLabels(false);
+        rightAxis.setDrawZeroLine(false);
+        rightAxis.setDrawAxisLine(false);
+        rightAxis.setDrawGridLines(false);
+
+        leftAxis.setTextColor(Color.WHITE);
+        leftAxis.setDrawAxisLine(false);
+        //leftAxis.setDrawGridLines(false);
+        leftAxis.setDrawZeroLine(false);
+        leftAxis.setMinWidth(0);
+        leftAxis.setAxisMinimum(0);
+        leftAxis.setAxisMaximum(10);
+        leftAxis.setMaxWidth(10);
+        LineDataSet dataSet = new LineDataSet(entries, "" + title);
+        //dataSet.setColors(new int[] {Color.RED, Color.GREEN, Color.BLUE, Color.YELLOW });
+        dataSet.setColors(Color.parseColor("#AF8446"));
+        // this is the color i want #Af8446
+        LineData lineData = new LineData(dataSet);
+        chart2.setNoDataTextColor(Color.GRAY);
+
+        chart2.animateXY(150, 150);
+        chart2.getDescription().setEnabled(false);
+        chart2.setData(lineData);
+        chart2.invalidate(); // refresh
     }
 }
