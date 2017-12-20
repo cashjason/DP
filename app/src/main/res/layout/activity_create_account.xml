@@ -80,6 +80,23 @@
                 android:ems="10"
                 android:inputType="textPassword"/>
 
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="SECRET CODE:"
+                android:textColor="@color/colorAccent" />
+
+            <EditText
+                android:id="@+id/secretCode"
+                style="@style/EditTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:ems="10"
+                android:inputType="textPassword" />
+
             <Button
                 android:id="@+id/btnCreateAccount"
                 style="@style/ButtonStyleCustom"

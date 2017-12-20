@@ -5,6 +5,9 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_main">MainActivity</string>
 
+    <string name="com.twitter.sdk.android.CONSUMER_KEY">jceuIOfjwqwEEvzOmpFQ1wrAY</string>
+    <string name="com.twitter.sdk.android.CONSUMER_SECRET">E8I5O5WXQKDrscBj8bMfE9MrhSe1HP8ajLgyylMvVP8efGZKzx</string>
+
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
@@ -28,5 +31,6 @@
         <item>Pitcher</item>
         <item>Hitter</item>
     </string-array>
+
 </resources>
 

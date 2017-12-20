@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    style="@style/LinearLayoutOverlay"
-    android:background="@drawable/dugout"
+    android:background="#aaaaaa"
     tools:context="com.example.cashj.diamynperformance.FeedFragment">
 
     <ScrollView
@@ -15,151 +14,326 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
             android:layout_margin="16dp"
+            android:layout_marginBottom="20dp"
+            android:orientation="vertical"
             android:weightSum="1">
 
 
             <TextView
-                android:id="@+id/textView17"
+                android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:textColor="@color/colorPrimary"
-                android:text="Name:" />
+                android:gravity="center"
+                android:paddingLeft="10dp"
+                android:text="Profile"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="30sp" />
+                android:text="TextView" />
 
-            <EditText
-                android:id="@+id/profName"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAlignment="textEnd"
-                style="@style/EditTextStyle"
-                android:ems="10"
-                android:inputType="textPersonName" />
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/textView16"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:textColor="@color/colorPrimary"
-                android:text="Number:" />
+                <LinearLayout
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/profNum"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAlignment="textEnd"
-                style="@style/EditTextStyle"
-                android:ems="10"
-                android:inputType="number" />
+                    <TextView
+                        android:id="@+id/textView17"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:text="Name:"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="24sp" />
+                </LinearLayout>
 
-            <TextView
-                android:id="@+id/textView13"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:textColor="@color/colorPrimary"
-                android:text="Phone:" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/profPhone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAlignment="textEnd"
-                style="@style/EditTextStyle"
-                android:ems="10"
-                android:inputType="phone" />
+                    <EditText
+                        android:id="@+id/profName"
+                        style="@style/EditTextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="textPersonName"
+                        android:textAlignment="textEnd" />
+                </LinearLayout>
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/textView11"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:textColor="@color/colorPrimary"
-                android:text="Team:" />
+                android:orientation="horizontal">
 
-            <Spinner
-                android:id="@+id/teamSpinner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAlignment="textEnd"
-                style="@style/EditTextStyle"
-                android:entries="@array/team_arrays"/>
+                <LinearLayout
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/textView8"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:textColor="@color/colorPrimary"
-                android:text="Year:"/>
+                    <TextView
+                        android:id="@+id/textView16"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:text="Number:"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="24sp" />
+                </LinearLayout>
 
-            <Spinner
-                android:id="@+id/yearSpinner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAlignment="textEnd"
-                style="@style/EditTextStyle"
-                android:entries="@array/year_arrays"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/textView5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:textColor="@color/colorPrimary"
-                android:text="Position" />
+                    <EditText
+                        android:id="@+id/profNum"
+                        style="@style/EditTextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="number"
+                        android:textAlignment="textEnd" />
+                </LinearLayout>
+            </LinearLayout>
 
-            <Spinner
-                android:id="@+id/positionSpinner"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAlignment="textEnd"
-                style="@style/EditTextStyle"
-                android:entries="@array/position_arrays"/>
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:textColor="@color/colorPrimary"
-                android:text="Height" />
+                <LinearLayout
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/profHeight"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAlignment="textEnd"
-                style="@style/EditTextStyle"
-                android:ems="10"
-                android:inputType="number" />
+                    <TextView
+                        android:id="@+id/textView13"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:text="Phone:"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="24sp" />
+                </LinearLayout>
 
-            <TextView
-                android:id="@+id/textView18"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:textColor="@color/colorPrimary"
-                android:text="Weight:" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/profWeight"
+                    <EditText
+                        android:id="@+id/profPhone"
+                        style="@style/EditTextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:inputType="phone"
+                        android:textAlignment="textEnd" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAlignment="textEnd"
-                style="@style/EditTextStyle"
-                android:ems="10"
-                android:inputType="number" />
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView5"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:text="Position:"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="24sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <Spinner
+                        android:id="@+id/positionSpinner"
+                        style="@style/EditTextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:entries="@array/position_arrays"
+                        android:textAlignment="textEnd" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView11"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:text="Team:"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="24sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <Spinner
+                        android:id="@+id/teamSpinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        style="@style/EditTextStyle"
+                        android:entries="@array/team_arrays"
+                        android:spinnerMode="dropdown"
+                        android:textAlignment="textEnd" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView8"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:text="Year:"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="24sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <Spinner
+                        android:id="@+id/yearSpinner"
+                        style="@style/EditTextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:entries="@array/year_arrays"
+                        android:textAlignment="textEnd" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView4"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:text="Height"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="24sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/profHeight"
+                        style="@style/EditTextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="number"
+                        android:textAlignment="textEnd" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView18"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:text="Weight:"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="24sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/profWeight"
+                        style="@style/EditTextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="number"
+                        android:textAlignment="textEnd" />
+                </LinearLayout>
+            </LinearLayout>
 
             <Button
                 android:id="@+id/picBtn"
                 style="@style/ButtonStyleCustom"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Upload Picture"
-                android:padding="10dp" />
+                android:text="Upload Picture" />
 
             <Button
                 android:id="@+id/doneBtn"
@@ -167,6 +341,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Done" />
+
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

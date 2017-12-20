@@ -2,11 +2,8 @@ package com.example.cashj.diamynperformance;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -18,6 +15,8 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.twitter.sdk.android.core.Twitter;
+import com.twitter.sdk.android.tweetui.TweetUi;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -26,11 +25,20 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
         Fragment fragment = null;
         Class fragmentClass = null;
+        Bundle extras = getIntent().getExtras();
+        if(extras !=null) {
+            if (extras.getString("First").equals("setup")){
+                fragmentClass = ProfileFragment.class;
+            }else{
+                fragmentClass = FeedFragment.class;
+            }
+        }
         fragmentClass = FeedFragment.class;
         try {
             fragment = (Fragment) fragmentClass.newInstance();
@@ -106,7 +114,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_manage) {
             fragmentClass = ProfileFragment.class;
         }else if (id == R.id.nav_tools) {
-            fragmentClass = EvaluationsFragment.class;
+            fragmentClass = ToolsFragment.class;
         }
         try {
             fragment = (Fragment) fragmentClass.newInstance();
