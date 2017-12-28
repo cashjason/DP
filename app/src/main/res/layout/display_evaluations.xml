@@ -5,6 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/thirdtohome"
     style="@style/LinearLayoutOverlay"
+    android:backgroundTint="#DD050505"
     android:orientation="vertical">
 
     <ScrollView

@@ -22,7 +22,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="218dp"
-                app:srcCompat="@drawable/logow" />
+                app:srcCompat="@drawable/logob" />
 
             <ProgressBar
                 android:id="@+id/progress"
@@ -35,6 +35,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="EMAIL:"
+                android:textColor="@color/colorPrimaryDark"
                 style="@style/TextViewButtonCustom"/>
 
             <EditText
@@ -50,8 +51,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="PASSWORD:"
+                android:textColor="@color/colorPrimaryDark"
                 style="@style/TextViewButtonCustom"/>
-            cash
             <EditText
                 android:id="@+id/textPass"
                 style="@style/EditTextStyle"
@@ -80,6 +81,7 @@
                 style="@style/TextViewButtonCustom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryDark"
                 android:gravity="center"
                 android:text="Forgot Password?"
                 android:textSize="20sp" />

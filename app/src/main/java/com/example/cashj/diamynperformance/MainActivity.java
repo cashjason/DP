@@ -105,13 +105,13 @@ public class MainActivity extends AppCompatActivity
         Class fragmentClass = null;
         if (id == R.id.nav_feed) {
             fragmentClass = FeedFragment.class;
-        } else if (id == R.id.nav_camera) {
+        } else if (id == R.id.nav_evaluation) {
             fragmentClass = EvaluationsFragment.class;
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_history) {
             fragmentClass = HistoryFragment.class;
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_progress) {
             fragmentClass = ProgressFragment.class;
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_profile) {
             fragmentClass = ProfileFragment.class;
         }else if (id == R.id.nav_tools) {
             fragmentClass = ToolsFragment.class;

@@ -36,7 +36,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         forgotPassword.setOnClickListener(this);
         email = findViewById(R.id.textEmail);
         password = findViewById(R.id.textPass);
-        progress = (ProgressBar) findViewById(R.id.progress);
+        progress = findViewById(R.id.progress);
         progress.setVisibility(View.GONE);
 
 
@@ -56,12 +56,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        progress.setVisibility(View.GONE);
+    }
+
+    @Override
     public void onClick(View v) {
         String em = email.getText().toString();
         String pass = password.getText().toString();
-        progress.setVisibility(View.VISIBLE);
+
         int i = v.getId();
         if (i == R.id.btnLogin) {
+            progress.setVisibility(View.VISIBLE);
             try {
                 mAuth.signInWithEmailAndPassword(em, pass)
                         .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
