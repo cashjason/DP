@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     style="@style/LinearLayoutOverlay"
+    android:backgroundTint="#DD050505"
     android:background="@drawable/bleachers"
     tools:context="com.example.cashj.diamynperformance.FeedFragment">
 

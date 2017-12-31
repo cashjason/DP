@@ -1,5 +1,6 @@
 package com.example.cashj.diamynperformance;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
@@ -227,6 +228,24 @@ public class HistoryFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         int i = v.getId();
+        if (i == R.id.PostGameEvalBtn) {
+            Intent act = new Intent(super.getContext(), DisplayHistory.class);
+            act.putExtra("EVAL", "PostGameEval");
+            act.putExtra("DATE", selectedDate);
+            startActivity(act);
+        }
+        if (i == R.id.PostPracticeEvalBtn) {
+            Intent act = new Intent(super.getContext(), DisplayHistory.class);
+            act.putExtra("EVAL", "PostPracticeEval");
+            act.putExtra("DATE", selectedDate);
+            startActivity(act);
+        }
+        if (i == R.id.PostBullpenBtn) {
+            Intent act = new Intent(super.getContext(), DisplayHistory.class);
+            act.putExtra("EVAL", "PostBullpenEval");
+            act.putExtra("DATE", selectedDate);
+            startActivity(act);
+        }
 
     }
 }
