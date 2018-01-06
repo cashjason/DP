@@ -38,15 +38,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     compile files('libs/YouTubeAndroidPlayerApi.jar')
     compile 'com.github.sundeepk:compact-calendar-view:2.0.2.2'
-    // Include all the Twitter APIs
-    // 'com.twitter.sdk.android:twitter:3.1.1'
-    //    compile 'com.twitter.sdk.android:twitter-core:3.1.1'
-        compile 'com.twitter.sdk.android:tweet-ui:3.1.1'
-    //    compile 'com.twitter.sdk.android:tweet-composer:3.1.1'
+    compile 'com.twitter.sdk.android:tweet-ui:3.1.1'
 }
-
-
-
-
 
 apply plugin: 'com.google.gms.google-services'
