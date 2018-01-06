@@ -1,4 +1,4 @@
-package com.example.cashj.diamynperformance;
+package com.dp.diamyn.diamynperformance;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

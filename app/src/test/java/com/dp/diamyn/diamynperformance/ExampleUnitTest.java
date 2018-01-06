@@ -1,4 +1,4 @@
-package com.example.cashj.diamynperformance;
+package com.dp.diamyn.diamynperformance;
 
 import org.junit.Test;
 

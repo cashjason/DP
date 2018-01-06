@@ -1,4 +1,4 @@
-package com.example.cashj.diamynperformance;
+package com.dp.diamyn.diamynperformance;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -26,14 +26,15 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
 @RequiresApi(api = Build.VERSION_CODES.N)
 public class HistoryFragment extends Fragment implements View.OnClickListener {
 
-    String ID, selectedDate;
+    String ID;
+    String selectedDate;
+    String selEvalDate;
     FirebaseUser user;
     FirebaseDatabase database;
     DatabaseReference mDatabase;
@@ -41,7 +42,6 @@ public class HistoryFragment extends Fragment implements View.OnClickListener {
     TextView monthText;
     SimpleDateFormat dateFormatMonth = new SimpleDateFormat("MMMM - yyyy", Locale.getDefault());
     SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
-    ArrayList list;
     Button postGame, postPractice, postBullpen;
 
     @Nullable
@@ -90,7 +90,7 @@ public class HistoryFragment extends Fragment implements View.OnClickListener {
                         e.printStackTrace();
                     }
                     long millis = date.getTime();
-                    Event evt = new Event(Color.GREEN, millis);
+                    Event evt = new Event(Color.parseColor("#005a00"), millis);
                     compactCalendar.invalidate();
                     compactCalendar.addEvent(evt);
                 }
@@ -119,7 +119,6 @@ public class HistoryFragment extends Fragment implements View.OnClickListener {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
-        //TODO: Add bullpen evaluations to history section.
         //This is for the bullpen
         mDatabase.child("users/"+ID+"/PostBullpenEval/").addValueEventListener(new ValueEventListener() {
             @Override
@@ -145,7 +144,14 @@ public class HistoryFragment extends Fragment implements View.OnClickListener {
         compactCalendar.setListener(new CompactCalendarView.CompactCalendarViewListener() {
             @Override
             public void onDayClick(final Date dateClicked) {
+                System.out.println("DATE CLICKED is =" + dateClicked);
+                long val = dateClicked.getTime();
+                Date date=new Date(val);
+                SimpleDateFormat df2 = new SimpleDateFormat("MM-dd-yyyy");
+                selEvalDate = df2.format(date);
+                //System.out.println(selEvalDate);
                 mDatabase.child("users/"+ID+"/PostGameEval/").addValueEventListener(new ValueEventListener() {
+
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         postGame.setVisibility(View.GONE);
@@ -231,19 +237,19 @@ public class HistoryFragment extends Fragment implements View.OnClickListener {
         if (i == R.id.PostGameEvalBtn) {
             Intent act = new Intent(super.getContext(), DisplayHistory.class);
             act.putExtra("EVAL", "PostGameEval");
-            act.putExtra("DATE", selectedDate);
+            act.putExtra("DATE", selEvalDate);
             startActivity(act);
         }
         if (i == R.id.PostPracticeEvalBtn) {
             Intent act = new Intent(super.getContext(), DisplayHistory.class);
             act.putExtra("EVAL", "PostPracticeEval");
-            act.putExtra("DATE", selectedDate);
+            act.putExtra("DATE", selEvalDate);
             startActivity(act);
         }
         if (i == R.id.PostBullpenBtn) {
             Intent act = new Intent(super.getContext(), DisplayHistory.class);
             act.putExtra("EVAL", "PostBullpenEval");
-            act.putExtra("DATE", selectedDate);
+            act.putExtra("DATE", selEvalDate);
             startActivity(act);
         }
 

@@ -6,7 +6,7 @@
     android:orientation="vertical"
     style="@style/LinearLayoutOverlay"
     android:background="@drawable/dugout"
-    tools:context="com.example.cashj.diamynperformance.FeedFragment">
+    tools:context="com.dp.diamyn.diamynperformance.FeedFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -271,7 +271,7 @@
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
                         android:paddingLeft="10dp"
-                        android:text="Height"
+                        android:text="Height (in):"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="24sp" />
                 </LinearLayout>
@@ -308,7 +308,7 @@
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
                         android:paddingLeft="10dp"
-                        android:text="Weight:"
+                        android:text="Weight (lbs):"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="24sp" />
                 </LinearLayout>

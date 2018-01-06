@@ -1,6 +1,5 @@
-package com.example.cashj.diamynperformance;
+package com.dp.diamyn.diamynperformance;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -190,6 +190,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             mDatabase.child("users").child(ID).child("PlayerInformation").child("Position").setValue(pPosition.getSelectedItem().toString());
             mDatabase.child("users").child(ID).child("PlayerInformation").child("Height").setValue(pHeight.getText().toString());
             mDatabase.child("users").child(ID).child("PlayerInformation").child("Weight").setValue(pWeight.getText().toString());
+            Toast.makeText(getContext(), "Profile Updated", Toast.LENGTH_SHORT).show();
         }
     }
 

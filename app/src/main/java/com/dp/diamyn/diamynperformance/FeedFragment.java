@@ -1,4 +1,4 @@
-package com.example.cashj.diamynperformance;
+package com.dp.diamyn.diamynperformance;
 
 
 import android.os.Bundle;
@@ -9,8 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.FirebaseDatabase;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.DefaultLogger;
 import com.twitter.sdk.android.core.Result;
@@ -39,13 +37,13 @@ public class FeedFragment extends ListFragment implements View.OnClickListener {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         TwitterConfig config = new TwitterConfig.Builder(super.getContext())
                 .logger(new DefaultLogger(Log.DEBUG))
                 .twitterAuthConfig(new TwitterAuthConfig("jceuIOfjwqwEEvzOmpFQ1wrAY", "E8I5O5WXQKDrscBj8bMfE9MrhSe1HP8ajLgyylMvVP8efGZKzx"))
                 .debug(true)
                 .build();
         Twitter.initialize(config);
-
         UserTimeline userTimeline = new UserTimeline.Builder().screenName("DiamynHall").build();
         userTimeline.next(null, new Callback<TimelineResult<Tweet>>() {
             @Override
@@ -54,10 +52,7 @@ public class FeedFragment extends ListFragment implements View.OnClickListener {
             public void failure(TwitterException exception) { System.out.println("Failure"); }
         });
 
-        adapter = new TweetTimelineListAdapter.Builder(super.getContext())
-                .setTimeline(userTimeline)
-                .build();
-        adapter = new TweetTimelineListAdapter(super.getContext(), userTimeline);
+        adapter = new TweetTimelineListAdapter.Builder(super.getContext()).setTimeline(userTimeline).build();
         setListAdapter(adapter);
     }
 

@@ -7,7 +7,7 @@
     style="@style/LinearLayoutOverlay"
     android:backgroundTint="#DD050505"
     android:background="@drawable/bleachers"
-    tools:context="com.example.cashj.diamynperformance.FeedFragment">
+    tools:context="com.dp.diamyn.diamynperformance.FeedFragment">
 
 
     <com.github.mikephil.charting.charts.BarChart

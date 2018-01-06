@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.cashj.diamynperformance">
+    package="com.dp.diamyn.diamynperformance">
     <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LoginActivity">
+        <activity android:name="com.dp.diamyn.diamynperformance.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -17,13 +17,19 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name="com.dp.diamyn.diamynperformance.MainActivity"
             android:theme="@style/AppTheme"></activity>
         <activity
-            android:name=".CreateAccountActivity"
+            android:name="com.dp.diamyn.diamynperformance.CreateAccountActivity"
             android:theme="@style/AppTheme"></activity>
         <activity
-            android:name=".DisplayEvaluations"
+            android:name="com.dp.diamyn.diamynperformance.SetupActivity"
+            android:theme="@style/AppTheme"></activity>
+        <activity
+            android:name="com.dp.diamyn.diamynperformance.DisplayEvaluations"
+            android:theme="@style/AppTheme"></activity>
+        <activity
+            android:name="com.dp.diamyn.diamynperformance.DisplayHistory"
             android:theme="@style/AppTheme"></activity>
 
     </application>

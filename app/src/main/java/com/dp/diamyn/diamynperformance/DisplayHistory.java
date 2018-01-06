@@ -1,4 +1,4 @@
-package com.example.cashj.diamynperformance;
+package com.dp.diamyn.diamynperformance;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

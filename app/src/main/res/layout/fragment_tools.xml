@@ -3,12 +3,44 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.cashj.diamynperformance.FeedFragment">
+    tools:context="com.dp.diamyn.diamynperformance.FeedFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Tools Fragment" />
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/linearLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="125dp"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            android:weightSum="2">
+
+            <Button
+                android:id="@+id/btnConcentration"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="Concentration Grid"
+                android:background="#1050FF"
+                android:textColor="#FFFFFF"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:layout_weight="1" />
+            <Button
+                android:id="@+id/btnBreathing"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="Breathing"
+                android:background="#10AA50"
+                android:textColor="#FFFFFF"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+    </LinearLayout>
 
 </FrameLayout>
