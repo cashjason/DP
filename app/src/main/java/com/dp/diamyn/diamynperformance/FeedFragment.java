@@ -51,9 +51,9 @@ public class FeedFragment extends ListFragment implements View.OnClickListener {
             @Override
             public void failure(TwitterException exception) { System.out.println("Failure"); }
         });
-
-        adapter = new TweetTimelineListAdapter.Builder(super.getContext()).setTimeline(userTimeline).build();
-        setListAdapter(adapter);
+//Uncomment and fix to fix the feed
+//        adapter = new TweetTimelineListAdapter.Builder(super.getContext()).setTimeline(userTimeline).build();
+//        setListAdapter(adapter);
     }
 
     @Override

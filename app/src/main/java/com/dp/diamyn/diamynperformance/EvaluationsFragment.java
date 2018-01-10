@@ -35,13 +35,13 @@ public class EvaluationsFragment extends Fragment implements View.OnClickListene
         super.onViewCreated(view, savedInstanceState);
 
         //This is where everything is done
-        practiceEval = (Button) view.findViewById(R.id.postPreacticeEval);
+        practiceEval = view.findViewById(R.id.postPreacticeEval);
         practiceEval.setOnClickListener(this);
-        gameEval = (Button) view.findViewById(R.id.postGameEval);
+        gameEval = view.findViewById(R.id.postGameEval);
         gameEval.setOnClickListener(this);
-        bullpenEval = (Button) view.findViewById(R.id.bullpenEval);
+        bullpenEval = view.findViewById(R.id.bullpenEval);
         bullpenEval.setOnClickListener(this);
-        pitcherGameEval = (Button) view.findViewById(R.id.postGameEvalPitcher);
+        pitcherGameEval = view.findViewById(R.id.postGameEvalPitcher);
         pitcherGameEval.setOnClickListener(this);
         bullpenEval.setVisibility(View.GONE);
         pitcherGameEval.setVisibility(View.GONE);

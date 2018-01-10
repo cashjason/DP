@@ -1,13 +1,25 @@
 package com.dp.diamyn.diamynperformance;
 
+import android.Manifest.permission;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -19,18 +31,20 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-/**
- * Created by cashj on 12/2/2017.
- */
+import java.io.File;
+
+import static android.app.Activity.RESULT_OK;
 
 public class ProfileFragment extends Fragment implements View.OnClickListener {
     String ID;
     FirebaseUser user;
     FirebaseDatabase database;
-    Button done;
+    Button done, pic;
+    ImageView myImage;
     EditText pName, pNum, pPhone, pHeight, pWeight;
     Spinner pTeam, pYear, pPosition;
     DatabaseReference mDatabase;
+    private static int RESULT_LOAD_IMAGE = 1;
 
     @Nullable
     @Override
@@ -39,12 +53,31 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     }
 
     @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case 1: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                        startYourCameraIntent();
+
+                } else {
+                    Toast.makeText(getActivity(), "Please give your permission.", Toast.LENGTH_LONG).show();
+                }
+                break;
+            }
+        }
+    }
+
+    @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //This is where everything is done
+        myImage = view.findViewById(R.id.pictureView);
         done = view.findViewById(R.id.doneBtn);
         done.setOnClickListener(this);
+        pic = view.findViewById(R.id.picBtn);
+        pic.setOnClickListener(this);
         pName = view.findViewById(R.id.profName);
         pNum = view.findViewById(R.id.profNum);
         pPhone = view.findViewById(R.id.profPhone);
@@ -178,6 +211,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         });
     }
 
+
+
     @Override
     public void onClick(View v) {
         int i = v.getId();
@@ -191,6 +226,56 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             mDatabase.child("users").child(ID).child("PlayerInformation").child("Height").setValue(pHeight.getText().toString());
             mDatabase.child("users").child(ID).child("PlayerInformation").child("Weight").setValue(pWeight.getText().toString());
             Toast.makeText(getContext(), "Profile Updated", Toast.LENGTH_SHORT).show();
+        }
+        if (i == R.id.picBtn) {
+
+
+//            try {
+//                if (ActivityCompat.checkSelfPermission(ProfileFragment.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+//                    ActivityCompat.requestPermissions(ProfileFragment.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, PICK_FROM_GALLERY);
+//                } else {
+//                    Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//                    startActivityForResult(galleryIntent, PICK_FROM_GALLERY);
+//                }
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+                    && ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE},
+                        REQUEST_PERMISSION);
+                dialog.dismiss();
+                return;
+            }
+
+            Toast.makeText(getContext(), "Pic Button", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(intent, RESULT_LOAD_IMAGE);
+        }
+    }
+
+    private void startYourCameraIntent() {
+        onRequestPermissionsResult();
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
+            Uri selectedImage = data.getData();
+            String[] filePathColumn = { MediaStore.Images.Media.DATA };
+            Cursor cursor = getContext().getContentResolver().query(selectedImage,filePathColumn, null, null, null);
+            cursor.moveToFirst();
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String picturePath = cursor.getString(columnIndex);
+            cursor.close();
+            System.out.println("PICTURE PATH IS = " + picturePath);
+
+            Bitmap bitmap = BitmapFactory.decodeFile(picturePath);
+            myImage.setImageBitmap(bitmap);
+
+
         }
     }
 

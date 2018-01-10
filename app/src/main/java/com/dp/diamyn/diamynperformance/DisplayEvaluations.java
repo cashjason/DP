@@ -1,5 +1,6 @@
 package com.dp.diamyn.diamynperformance;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -38,7 +41,7 @@ public class DisplayEvaluations extends AppCompatActivity implements View.OnClic
         setContentView(R.layout.display_evaluations);
         Bundle extras = getIntent().getExtras();
         if(extras !=null) {
-            eval = extras.getString("eval");
+            eval = extras.getString("EVAL");
         }
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         ID = user.getUid();
@@ -47,6 +50,14 @@ public class DisplayEvaluations extends AppCompatActivity implements View.OnClic
         date = simpledateFormat.format(System.currentTimeMillis());
         title = findViewById(R.id.evalTitle);
         title.setText(eval);
+        if (eval.equals("PostGameEval")) {
+            title.setText("Post Game Evaluation");
+        } else if (eval.equals("PostBullpenEval")) {
+            title.setText("Post Bullpen Evaluation");
+        } else{
+            title.setText("Post Practice Evaluation");
+        }
+
         q1 = findViewById(R.id.q1);
         q2 = findViewById(R.id.q2);
         q3 = findViewById(R.id.q3);
@@ -202,7 +213,7 @@ public class DisplayEvaluations extends AppCompatActivity implements View.OnClic
 
     @Override
     public void onClick(View v) {
-        
+        Toast.makeText(this, "Evaluation Submitted", Toast.LENGTH_SHORT).show();
         //Add all of the post Practice stuff here
         mDatabase.child("users").child(ID).child(eval)
                 .child(date).child("question1Answer").setValue(rSeek.getProgress()+1);
@@ -305,5 +316,8 @@ public class DisplayEvaluations extends AppCompatActivity implements View.OnClic
             public void onCancelled(DatabaseError databaseError) {
             }
         });
+
+        Intent act = new Intent(this, MainActivity.class);
+        startActivity(act);
     }
 }

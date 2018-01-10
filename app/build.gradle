@@ -39,6 +39,7 @@ dependencies {
     compile files('libs/YouTubeAndroidPlayerApi.jar')
     compile 'com.github.sundeepk:compact-calendar-view:2.0.2.2'
     compile 'com.twitter.sdk.android:tweet-ui:3.1.1'
+    compile 'com.github.jakob-grabner:Circle-Progress-View:v1.3'
 }
 
 apply plugin: 'com.google.gms.google-services'

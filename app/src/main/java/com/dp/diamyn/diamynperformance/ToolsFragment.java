@@ -10,10 +10,6 @@ import android.view.ViewGroup;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
-/**
- * Created by cashj on 12/2/2017.
- */
-
 public class ToolsFragment extends Fragment implements View.OnClickListener{
     String ID;
     FirebaseUser user;

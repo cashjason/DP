@@ -201,14 +201,14 @@ public class ProgressFragment extends Fragment implements View.OnClickListener, 
 
         List<BarEntry> entries = new ArrayList<BarEntry>();
 
-        entries.add(new BarEntry(0, (float) (0 + getAve(newR1))));
-        entries.add(new BarEntry(1, (float) (0 + getAve(newA))));
-        entries.add(new BarEntry(2, (float) (0 + getAve(newI))));
-        entries.add(new BarEntry(3, (float) (0 + getAve(newD))));
-        entries.add(new BarEntry(4, (float) (0 + getAve(newE))));
-        entries.add(new BarEntry(5, (float) (0 + getAve(newR2))));
+        entries.add(new BarEntry(1, (float) (0 + getAve(newR1))));
+        entries.add(new BarEntry(2, (float) (0 + getAve(newA))));
+        entries.add(new BarEntry(3, (float) (0 + getAve(newI))));
+        entries.add(new BarEntry(4, (float) (0 + getAve(newD))));
+        entries.add(new BarEntry(5, (float) (0 + getAve(newE))));
+        entries.add(new BarEntry(6, (float) (0 + getAve(newR2))));
 
-        BarDataSet dataSet = new BarDataSet(entries, "RAIDER Subscores"); // add entries to dataset
+        BarDataSet dataSet = new BarDataSet(entries, "Average of evaluation scores");
         dataSet.setBarBorderColor(4);
         //dataSet.setColors(new int[] {Color.RED, Color.GREEN, Color.BLUE, Color.YELLOW });
         dataSet.setColors(Color.parseColor("#AF8446"));
@@ -258,21 +258,21 @@ public class ProgressFragment extends Fragment implements View.OnClickListener, 
     public void onValueSelected(Entry e, Highlight h) {
         int value = (int) e.getX();
         if (value == 0){
-            showQuestionGraph(newR1, "R = Relaxation Level");
+            showQuestionGraph(newR1, "Confidence");
         }else if(value == 1){
-            showQuestionGraph(newA, "A = Amp Level");
+            showQuestionGraph(newA, "Self-Talk");
         }
         else if(value == 2){
-            showQuestionGraph(newI, "I = Imagine Before Action");
+            showQuestionGraph(newI, "Controlling the controllables");
         }
         else if(value == 3){
-            showQuestionGraph(newD, "D = Dominate THIS Moment");
+            showQuestionGraph(newD, "Competing one pitch at a time");
         }
         else if(value == 4){
-            showQuestionGraph(newE, "E = Embrace Advirsity");
+            showQuestionGraph(newE, "Clear / calm mind");
         }
         else if(value == 5){
-            showQuestionGraph(newR2, "R = Routines");
+            showQuestionGraph(newR2, "Relaxed body");
         }
     }
 
@@ -303,6 +303,7 @@ public class ProgressFragment extends Fragment implements View.OnClickListener, 
         YAxis leftAxis = chart2.getAxisLeft();
         YAxis rightAxis = chart2.getAxisRight();
 
+
         rightAxis.removeAllLimitLines();
         rightAxis.setDrawLabels(false);
         rightAxis.setDrawZeroLine(false);
@@ -322,6 +323,11 @@ public class ProgressFragment extends Fragment implements View.OnClickListener, 
         dataSet.setColors(Color.parseColor("#AF8446"));
         // this is the color i want #Af8446
         LineData lineData = new LineData(dataSet);
+
+        //This hides the labels
+        xAxis.setDrawLabels(false);
+        leftAxis.setDrawLabels(false);
+
         chart2.setNoDataTextColor(Color.GRAY);
 
         chart2.animateXY(150, 150);

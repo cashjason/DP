@@ -24,20 +24,20 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:text="Concentration Grid"
-                android:background="#1050FF"
+                android:background="@color/colorAccent"
                 android:textColor="#FFFFFF"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
+                android:padding="16dp"
+                android:layout_margin="16dp"
                 android:layout_weight="1" />
             <Button
                 android:id="@+id/btnBreathing"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:text="Breathing"
-                android:background="#10AA50"
+                android:background="@color/colorAccent"
                 android:textColor="#FFFFFF"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
+                android:padding="16dp"
+                android:layout_margin="16dp"
                 android:layout_weight="1" />
 
         </LinearLayout>

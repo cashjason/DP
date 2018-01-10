@@ -41,7 +41,7 @@
                     style="@style/TextViewButtonCustom"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="R = Relaxation Level"
+                    android:text="Confidence"
                     android:textAlignment="center"
                     android:textSize="20sp" />
 
@@ -68,7 +68,7 @@
                     style="@style/TextViewButtonCustom"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="A = Amp Level"
+                    android:text="Self-Talk"
                     android:textAlignment="center"
                     android:textSize="20sp" />
 
@@ -93,7 +93,7 @@
                     style="@style/TextViewButtonCustom"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="I = Imagine Before Action"
+                    android:text="Controlling the controllables"
                     android:textAlignment="center"
                     android:textSize="20sp" />
 
@@ -118,7 +118,7 @@
                     style="@style/TextViewButtonCustom"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="D = Dominate THIS Moment"
+                    android:text="Competing one pitch at a time"
                     android:textAlignment="center"
                     android:textSize="20sp" />
 
@@ -143,7 +143,7 @@
                     style="@style/TextViewButtonCustom"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="E = Embrace Advirsity"
+                    android:text="Clear / calm mind"
                     android:textAlignment="center"
                     android:textSize="20sp" />
 
@@ -169,7 +169,7 @@
                     style="@style/TextViewButtonCustom"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="R = Routines"
+                    android:text="Relaxed body"
                     android:textAlignment="center"
                     android:textSize="20sp" />
 
