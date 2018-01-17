@@ -1,6 +1,7 @@
 package com.dp.diamyn.diamynperformance;
 
 import android.Manifest.permission;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -10,6 +11,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -23,6 +25,8 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -30,8 +34,17 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
+import java.net.URI;
+import java.util.UUID;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -44,29 +57,14 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     EditText pName, pNum, pPhone, pHeight, pWeight;
     Spinner pTeam, pYear, pPosition;
     DatabaseReference mDatabase;
-    private static int RESULT_LOAD_IMAGE = 1;
+    FirebaseStorage storage;
+    StorageReference storageReference;
+    private static final int PICK_FROM_GALLERY = 1;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_profile, null);
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case 1: {
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                        startYourCameraIntent();
-
-                } else {
-                    Toast.makeText(getActivity(), "Please give your permission.", Toast.LENGTH_LONG).show();
-                }
-                break;
-            }
-        }
     }
 
     @Override
@@ -90,6 +88,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         database = FirebaseDatabase.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         ID = user.getUid();
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
 
         database.getReference("users/" + ID + "/PlayerInformation/Name").addValueEventListener(new ValueEventListener() {
             @Override
@@ -209,6 +209,32 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
+
+        File localFile = null;
+        StorageReference ref = storageReference.child("images/"+ ID + "profilePicture");
+        try {
+            localFile = File.createTempFile("images", "jpg");
+
+            File finalLocalFile = localFile;
+            ref.getFile(localFile)
+                    .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                            // Successfully downloaded data to local file
+                            // ...
+                            Bitmap bitmap = BitmapFactory.decodeFile(finalLocalFile.getAbsolutePath());
+                            myImage.setImageBitmap(bitmap);
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle failed download
+                    // ...
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -229,40 +255,37 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         }
         if (i == R.id.picBtn) {
 
-
-//            try {
-//                if (ActivityCompat.checkSelfPermission(ProfileFragment.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-//                    ActivityCompat.requestPermissions(ProfileFragment.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, PICK_FROM_GALLERY);
-//                } else {
-//                    Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//                    startActivityForResult(galleryIntent, PICK_FROM_GALLERY);
-//                }
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
-                    && ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE},
-                        REQUEST_PERMISSION);
-                dialog.dismiss();
-                return;
+            try {
+                if (ActivityCompat.checkSelfPermission(super.getActivity(), android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(super.getActivity(), new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, PICK_FROM_GALLERY);
+                } else {
+                    Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(galleryIntent, PICK_FROM_GALLERY);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-
-            Toast.makeText(getContext(), "Pic Button", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            startActivityForResult(intent, RESULT_LOAD_IMAGE);
         }
     }
 
-    private void startYourCameraIntent() {
-        onRequestPermissionsResult();
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults)
+    {
+        switch (requestCode) {
+            case PICK_FROM_GALLERY:
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(galleryIntent, PICK_FROM_GALLERY);
+                } else {
+                }
+                break;
+        }
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
+        if (requestCode == PICK_FROM_GALLERY && resultCode == RESULT_OK && null != data) {
             Uri selectedImage = data.getData();
             String[] filePathColumn = { MediaStore.Images.Media.DATA };
             Cursor cursor = getContext().getContentResolver().query(selectedImage,filePathColumn, null, null, null);
@@ -272,10 +295,76 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             cursor.close();
             System.out.println("PICTURE PATH IS = " + picturePath);
 
+            //compress picture
+
             Bitmap bitmap = BitmapFactory.decodeFile(picturePath);
+
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 10, byteArrayOutputStream);
             myImage.setImageBitmap(bitmap);
+            byte[] byteData = byteArrayOutputStream.toByteArray();
+            upImage(byteData);
+
+//            Bitmap bitmap = BitmapFactory.decodeFile(picturePath);
+//            myImage.setImageBitmap(bitmap);
+//            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+//            bitmap.compress(Bitmap.CompressFormat.JPEG, 20, byteArrayOutputStream);
+//
+//            uploadImage(selectedImage);
+        }
+    }
+
+    private void upImage(byte[] byteData) {
+        StorageReference ref = storageReference.child("images/"+ ID + "profilePicture");
+        UploadTask uploadTask = ref.putBytes(byteData);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle unsuccessful uploads
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
+                Uri downloadUrl = taskSnapshot.getDownloadUrl();
+            }
+        });
+    }
 
 
+    private void uploadImage(Uri filePath) {
+
+        if(filePath != null)
+        {
+
+            final ProgressDialog progressDialog = new ProgressDialog(getContext());
+            progressDialog.setTitle("Uploading...");
+            progressDialog.show();
+
+            StorageReference ref = storageReference.child("images/"+ ID + "profilePicture");
+            ref.putFile(filePath)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            progressDialog.dismiss();
+                            Toast.makeText(getContext(), "Uploaded", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            progressDialog.dismiss();
+                            Toast.makeText(getContext(), "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                            double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
+                                    .getTotalByteCount());
+                            progressDialog.setMessage("Uploaded "+(int)progress+"%");
+                        }
+                    });
         }
     }
 

@@ -1,7 +1,12 @@
 package com.dp.diamyn.diamynperformance;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.design.widget.NavigationView;
@@ -13,23 +18,35 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.io.File;
+import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     TextView name, year, pos, num;
+    ImageView profPic;
     String ID;
     FirebaseUser user;
     FirebaseDatabase database;
+    StorageReference storageReference;
+    FirebaseStorage storage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +56,8 @@ public class MainActivity extends AppCompatActivity
         user = FirebaseAuth.getInstance().getCurrentUser();
         database = FirebaseDatabase.getInstance();
         ID = user.getUid();
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -77,6 +96,7 @@ public class MainActivity extends AppCompatActivity
         num = headerView.findViewById(R.id.navNum);
         pos = headerView.findViewById(R.id.navPos);
         year = headerView.findViewById(R.id.navYear);
+
         database.getReference("users/" + ID + "/PlayerInformation/Name").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -189,5 +209,36 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        View headerView = navigationView.getHeaderView(0);
+        profPic = headerView.findViewById(R.id.profPic);
+        File localFile;
+        StorageReference ref = storageReference.child("images/"+ ID + "profilePicture");
+        try {
+            localFile = File.createTempFile("images", "jpg");
+
+            File finalLocalFile = localFile;
+            ref.getFile(localFile)
+                    .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                            Bitmap bitmap = BitmapFactory.decodeFile(finalLocalFile.getAbsolutePath());
+                            profPic.setImageBitmap(bitmap);
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
